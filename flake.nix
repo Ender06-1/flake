@@ -1,23 +1,21 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
-    home-manager.url = "github:nix-community/home-manager/release-26.05";
-  };
 
-  outputs = { nixpkgs, home-manager, ... }: {
-    nixosConfigurations."msi" = nixpkgs.lib.nixosSystem {
-      modules = [
-        ./modules/hosts/msi/configuration.nix
+    home-manager = {
+      url = "github:nix-community/home-manager/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-	home-manager.nixosModules.home-manager
-	{
-	  home-manager = {
-	    useGlobalPkgs = true;
-	    useUserPackages = true;
-	    users.matheo = ./modules/users/matheo/home.nix;
-	  };
-	}
-      ];
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
+    import-tree.url = "github:vic/import-tree";
+
+    caelestia-shell = {
+      url = "github:caelestia-dots/shell?ref=v2.5.0";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
+
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 }
