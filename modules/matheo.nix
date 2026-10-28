@@ -1,0 +1,301 @@
+{
+  self,
+  inputs,
+  den,
+  ...
+}:
+
+{
+  den.aspects.matheo = {
+    includes = [
+      den.batteries.define-user
+      den.batteries.primary-user
+    ];
+
+    homeManager =
+      {
+        config,
+        lib,
+        pkgs,
+        ...
+      }:
+      {
+        imports = [
+          inputs.caelestia-shell.homeManagerModules.default
+        ];
+
+        programs.git = {
+          enable = true;
+          settings = {
+            init.defaultBranch = "main";
+            user = {
+              name = "Ender";
+              email = "ndxendernight@gmail.com";
+            };
+          };
+        };
+
+        programs.kitty.enable = true;
+
+        wayland.windowManager.hyprland = {
+          enable = true;
+          systemd.enable = false;
+          settings = {
+            monitor = [
+              {
+                output = "desc:AOC 24G2W1G3- 1J4QBHA003151";
+                mode = "1920x1080@165.00Hz";
+                position = "auto-left";
+                scale = 1;
+                cm = "auto";
+              }
+
+              {
+                output = "desc:Samsung Electric Company S24D330 0x5A5A5131";
+                mode = "1920x1080@60.00Hz";
+                position = "auto-right";
+                scale = 1;
+                cm = "auto";
+              }
+
+              {
+                output = "";
+                mode = "preferred";
+                position = "auto";
+                scale = "auto";
+              }
+            ];
+
+            config = [
+              ###################
+              ## LOOK AND FEEL ##
+              ###################
+              {
+                general = {
+                  gaps_in = 5;
+                  gaps_out = 20;
+
+                  border_size = 2;
+
+                  col = {
+                    active_border = "rgb(c6b569)";
+                    inactive_border = "rgb(333231)";
+                  };
+
+                  layout = "scrolling";
+                };
+
+                decoration = {
+                  rounding = 10;
+                  rounding_power = 2;
+
+                  shadow.enabled = false;
+                  blur.enabled = false;
+                };
+
+                animations.enabled = true;
+
+                cursor.no_hardware_cursors = 1;
+
+                misc = {
+                  force_default_wallpaper = 0;
+                  disable_hyprland_logo = true;
+                  disable_splash_rendering = true;
+                };
+
+                input = {
+                  kb_layout = "us";
+                  numlock_by_default = true;
+                  repeat_delay = 200;
+                  repeat_rate = 40;
+                  kb_options = "compose:ralt";
+                };
+
+              }
+            ];
+
+            device = [
+              {
+                _args = [
+                  {
+                    name = "razer-razer-basilisk-v3";
+                    accel_profile = "flat";
+                  }
+                ];
+              }
+            ];
+
+            bind =
+              let
+                mod = "SUPER";
+              in
+              builtins.concatLists [
+                [
+
+                  {
+                    _args = [
+                      "${mod} + SHIFT + M"
+                      (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"uwsm stop\")")
+                    ];
+                  }
+
+                  {
+                    _args = [
+                      "${mod} + SHIFT + Q"
+                      (lib.generators.mkLuaInline "hl.dsp.window.close()")
+                    ];
+                  }
+
+                  {
+                    _args = [
+                      "${mod} + RETURN"
+                      (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"uwsm app -- kitty\")")
+                    ];
+                  }
+
+                  {
+                    _args = [
+                      "${mod} + I"
+                      (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"uwsm app -- firefox\")")
+                    ];
+                  }
+
+                  {
+                    _args = [
+                      "${mod} + L"
+                      (lib.generators.mkLuaInline "hl.dsp.focus({ direction = \"r\" })")
+                    ];
+                  }
+
+                  {
+                    _args = [
+                      "${mod} + H"
+                      (lib.generators.mkLuaInline "hl.dsp.focus({ direction = \"l\" })")
+                    ];
+                  }
+
+                  {
+                    _args = [
+                      "${mod} + J"
+                      (lib.generators.mkLuaInline "hl.dsp.focus({ direction = \"d\" })")
+                    ];
+                  }
+
+                  {
+                    _args = [
+                      "${mod} + K"
+                      (lib.generators.mkLuaInline "hl.dsp.focus({ direction = \"u\" })")
+                    ];
+                  }
+
+                  {
+                    _args = [
+                      "${mod} + F"
+                      (lib.generators.mkLuaInline "hl.dsp.window.fullscreen()")
+                    ];
+                  }
+
+                  {
+                    _args = [
+                      "${mod} + SHIFT + F"
+                      (lib.generators.mkLuaInline "hl.dsp.window.float()")
+                    ];
+                  }
+
+                  {
+                    _args = [
+                      "${mod} + mouse:272"
+                      (lib.generators.mkLuaInline "hl.dsp.window.drag()")
+                      { mouse = true; }
+                    ];
+                  }
+
+                  {
+                    _args = [
+                      "${mod} + mouse:273"
+                      (lib.generators.mkLuaInline "hl.dsp.window.resize()")
+                      { mouse = true; }
+                    ];
+                  }
+
+                  {
+                    _args = [
+                      "XF86AudioRaiseVolume"
+                      (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"wpctl set-mute @DEFAULT_AUDIO_SINK@ 0; wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+\")")
+                      { repeating = true; }
+                    ];
+                  }
+
+                  {
+                    _args = [
+                      "XF86AudioLowerVolume"
+                      (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"wpctl set-mute @DEFAULT_AUDIO_SINK@ 0; wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-\")")
+                      { repeating = true; }
+                    ];
+                  }
+
+                ]
+
+                (builtins.genList (i: {
+                  _args = [
+                    "${mod} + ${toString i}"
+                    (lib.generators.mkLuaInline "hl.dsp.focus({ workspace = ${toString i}})")
+                  ];
+                }) 10)
+
+                (builtins.genList (i: {
+                  _args = [
+                    "${mod} + SHIFT + ${toString i}"
+                    (lib.generators.mkLuaInline "hl.dsp.window.move({ workspace = ${toString i}, follow = true })")
+                  ];
+                }) 10)
+              ];
+          };
+        };
+
+        programs.caelestia = {
+          enable = true;
+          cli.enable = true;
+        };
+
+        xdg = {
+          enable = true;
+          userDirs = {
+            enable = true;
+            createDirectories = true;
+          };
+          configFile."uwsm/env".source =
+            "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
+        };
+
+        home.pointerCursor = {
+          enable = true;
+          package = pkgs.bibata-cursors;
+          name = "Bibata-Modern-Ice";
+          size = 24;
+
+          hyprcursor.enable = true;
+        };
+
+        home.packages = with pkgs; [
+          neovim
+          tree
+          firefox
+        ];
+      };
+
+    provides.to-hosts.nixos = {
+      services.displayManager.ly = {
+        enable = true;
+        x11Support = false;
+      };
+
+      programs.hyprland = {
+        enable = true;
+        withUWSM = true;
+      };
+
+      services.tailscale.enable = true;
+    };
+  };
+}

@@ -8,6 +8,7 @@
       url = "github:caelestia-dots/shell?ref=v2.5.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    den.url = "github:denful/den";
     flake-file.url = "github:denful/flake-file";
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
