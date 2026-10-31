@@ -1,22 +1,21 @@
-{
-  self,
-  inputs,
-  den,
-  ...
-}:
+{ inputs, ... }:
 
 {
-  den.aspects.matheo = {
-    includes = [
-      den.batteries.define-user
-      den.batteries.primary-user
-    ];
+  flake-file.inputs.caelestia-shell.url = "github:caelestia-dots/shell?ref=v2.5.0";
+
+  den.aspects.hyprland-caelestia = {
+    nixos = {
+      programs.hyprland = {
+        enable = true;
+        withUWSM = true;
+      };
+    };
 
     homeManager =
       {
-        config,
-        lib,
         pkgs,
+        lib,
+        config,
         ...
       }:
       {
@@ -24,22 +23,11 @@
           inputs.caelestia-shell.homeManagerModules.default
         ];
 
-        programs.git = {
-          enable = true;
-          settings = {
-            init.defaultBranch = "main";
-            user = {
-              name = "Ender";
-              email = "ndxendernight@gmail.com";
-            };
-          };
-        };
-
-        programs.kitty.enable = true;
-
         wayland.windowManager.hyprland = {
           enable = true;
           systemd.enable = false;
+          package = null;
+          portalPackage = null;
           settings = {
             monitor = [
               {
@@ -204,6 +192,20 @@
 
                   {
                     _args = [
+                      "${mod} + P"
+                      (lib.generators.mkLuaInline "hl.dsp.global(\"caelestia:lock\")")
+                    ];
+                  }
+
+                  {
+                    _args = [
+                      "${mod} + SHIFT + P"
+                      (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"systemctl suspend-then-hibernate\")")
+                    ];
+                  }
+
+                  {
+                    _args = [
                       "${mod} + mouse:272"
                       (lib.generators.mkLuaInline "hl.dsp.window.drag()")
                       { mouse = true; }
@@ -220,9 +222,28 @@
 
                   {
                     _args = [
+                      "XF86AudioMute"
+                      (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle\")")
+                      { locked = true; }
+                    ];
+                  }
+
+                  {
+                    _args = [
+                      "XF86AudioMicMute"
+                      (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle\")")
+                      { locked = true; }
+                    ];
+                  }
+
+                  {
+                    _args = [
                       "XF86AudioRaiseVolume"
                       (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"wpctl set-mute @DEFAULT_AUDIO_SINK@ 0; wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+\")")
-                      { repeating = true; }
+                      {
+                        repeating = true;
+                        locked = true;
+                      }
                     ];
                   }
 
@@ -230,7 +251,42 @@
                     _args = [
                       "XF86AudioLowerVolume"
                       (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"wpctl set-mute @DEFAULT_AUDIO_SINK@ 0; wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-\")")
-                      { repeating = true; }
+                      {
+                        repeating = true;
+                        locked = true;
+                      }
+                    ];
+                  }
+
+                  {
+                    _args = [
+                      "XF86AudioPlay"
+                      (lib.generators.mkLuaInline "hl.dsp.global(\"caelestia:mediaToggle\")")
+                      { locked = true; }
+                    ];
+                  }
+
+                  {
+                    _args = [
+                      "XF86AudioNext"
+                      (lib.generators.mkLuaInline "hl.dsp.global(\"caelestia:mediaNext\")")
+                      { locked = true; }
+                    ];
+                  }
+
+                  {
+                    _args = [
+                      "XF86AudioPrev"
+                      (lib.generators.mkLuaInline "hl.dsp.global(\"caelestia:mediaPrev\")")
+                      { locked = true; }
+                    ];
+                  }
+
+                  {
+                    _args = [
+                      "XF86AudioStop"
+                      (lib.generators.mkLuaInline "hl.dsp.global(\"caelestia:mediaStop\")")
+                      { locked = true; }
                     ];
                   }
 
@@ -256,16 +312,115 @@
         programs.caelestia = {
           enable = true;
           cli.enable = true;
-        };
-
-        xdg = {
-          enable = true;
-          userDirs = {
-            enable = true;
-            createDirectories = true;
+          settings = {
+            bar = {
+              activeWindow = {
+                compact = true;
+                inverted = false;
+              };
+              clock = {
+                background = true;
+                showDate = true;
+              };
+              statusIcons = [
+                {
+                  enabled = true;
+                  id = "lockStatus";
+                }
+                {
+                  enabled = true;
+                  id = "network";
+                }
+                {
+                  enabled = true;
+                  id = "bluetooth";
+                }
+                {
+                  enabled = true;
+                  id = "microphone";
+                }
+                {
+                  enabled = true;
+                  id = "audio";
+                }
+              ];
+              tray.background = true;
+              workspaces = {
+                activeTrail = true;
+                perMonitor = false;
+              };
+            };
+            dashboard = {
+              performance.showBattery = false;
+              showClockSeconds = true;
+            };
+            general.apps = {
+              terminal = [
+                "kitty"
+              ];
+            };
+            launcher = {
+              showOnHover = true;
+              vimKeybinds = true;
+            };
+            services = {
+              clockFormat = "TwentyFourHour";
+              weatherUnits = "Celsius";
+            };
+            utilities = {
+              quickToggles = [
+                {
+                  enabled = true;
+                  id = "wifi";
+                }
+                {
+                  enabled = true;
+                  id = "bluetooth";
+                }
+                {
+                  enabled = true;
+                  id = "mic";
+                }
+                {
+                  enabled = true;
+                  id = "settings";
+                }
+                {
+                  enabled = true;
+                  id = "gameMode";
+                }
+                {
+                  enabled = true;
+                  id = "dnd";
+                }
+                {
+                  enabled = true;
+                  id = "vpn";
+                }
+              ];
+              toasts.chargingChanged = false;
+              vpn = {
+                enabled = true;
+                provider = [
+                  {
+                    connectCmd = [
+                      "tailscale"
+                      "up"
+                    ];
+                    disconnectCmd = [
+                      "tailscale"
+                      "down"
+                    ];
+                    displayName = "Tailscale";
+                    id = "vpn-mvw7l0ww-2s5xn";
+                    interface = "tailscale0";
+                    name = "tailscale";
+                  }
+                ];
+                selectedProvider = "vpn-mvw7l0ww-2s5xn";
+              };
+            };
           };
-          configFile."uwsm/env".source =
-            "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
         };
 
         home.pointerCursor = {
@@ -277,25 +432,10 @@
           hyprcursor.enable = true;
         };
 
-        home.packages = with pkgs; [
-          neovim
-          tree
-          firefox
-        ];
+        xdg = {
+          configFile."uwsm/env".source =
+            "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
+        };
       };
-
-    provides.to-hosts.nixos = {
-      services.displayManager.ly = {
-        enable = true;
-        x11Support = false;
-      };
-
-      programs.hyprland = {
-        enable = true;
-        withUWSM = true;
-      };
-
-      services.tailscale.enable = true;
-    };
   };
 }

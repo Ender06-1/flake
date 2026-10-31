@@ -23,12 +23,5 @@
     flake-file.url = "github:denful/flake-file";
 
     den.url = "github:denful/den";
-
-    caelestia-shell = {
-      url = "github:caelestia-dots/shell?ref=v2.5.0";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
-
-  systems = [ "x86_64-linux" ];
 }
