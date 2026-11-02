@@ -5,8 +5,16 @@
     includes = [
       den.batteries.define-user
       den.batteries.primary-user
+      (den.batteries.user-shell "fish")
 
       den.aspects.hyprland-caelestia
+      den.aspects.kitty
+      den.aspects.fish
+      den.aspects.eza
+      den.aspects.flatpak
+      den.aspects.zoxide
+      den.aspects.zellij
+      den.aspects.neovim
     ];
 
     homeManager =
@@ -24,7 +32,7 @@
           };
         };
 
-        programs.kitty.enable = true;
+        programs.nh.enable = true;
 
         xdg = {
           enable = true;
@@ -35,8 +43,6 @@
         };
 
         home.packages = with pkgs; [
-          neovim
-          tree
           firefox
         ];
       };

@@ -43,7 +43,7 @@
                 mode = "1920x1080@60.00Hz";
                 position = "auto-right";
                 scale = 1;
-                cm = "auto";
+                icc = "${./S24D330.icm}";
               }
 
               {
@@ -60,8 +60,8 @@
               ###################
               {
                 general = {
-                  gaps_in = 5;
-                  gaps_out = 20;
+                  gaps_in = 2;
+                  gaps_out = 10;
 
                   border_size = 2;
 
@@ -74,8 +74,7 @@
                 };
 
                 decoration = {
-                  rounding = 10;
-                  rounding_power = 2;
+                  rounding = 20;
 
                   shadow.enabled = false;
                   blur.enabled = false;
@@ -102,6 +101,17 @@
               }
             ];
 
+            workspace_rule = [
+              {
+                _args = [
+                  {
+                    workspace = "w[v1]";
+                    gaps_out = 20;
+                  }
+                ];
+              }
+            ];
+
             device = [
               {
                 _args = [
@@ -119,6 +129,12 @@
               in
               builtins.concatLists [
                 [
+                  {
+                    _args = [
+                      "${mod} + SUPER_L"
+                      (lib.generators.mkLuaInline "hl.dsp.global(\"caelestia:launcher\")")
+                    ];
+                  }
 
                   {
                     _args = [
@@ -173,6 +189,34 @@
                     _args = [
                       "${mod} + K"
                       (lib.generators.mkLuaInline "hl.dsp.focus({ direction = \"u\" })")
+                    ];
+                  }
+
+                  {
+                    _args = [
+                      "${mod} + SHIFT + L"
+                      (lib.generators.mkLuaInline "hl.dsp.window.move({ direction = \"r\" })")
+                    ];
+                  }
+
+                  {
+                    _args = [
+                      "${mod} + SHIFT + H"
+                      (lib.generators.mkLuaInline "hl.dsp.window.move({ direction = \"l\" })")
+                    ];
+                  }
+
+                  {
+                    _args = [
+                      "${mod} + SHIFT + J"
+                      (lib.generators.mkLuaInline "hl.dsp.window.move({ direction = \"d\" })")
+                    ];
+                  }
+
+                  {
+                    _args = [
+                      "${mod} + SHIFT + K"
+                      (lib.generators.mkLuaInline "hl.dsp.window.move({ direction = \"u\" })")
                     ];
                   }
 
@@ -306,6 +350,199 @@
                   ];
                 }) 10)
               ];
+
+            curve = [
+              {
+                _args = [
+                  "specialWorkSwitch"
+                  {
+                    type = "bezier";
+                    points = [
+                      [
+                        0.05
+                        0.7
+                      ]
+                      [
+                        0.1
+                        1
+                      ]
+                    ];
+                  }
+                ];
+              }
+              {
+                _args = [
+                  "emphasizedAccel"
+                  {
+                    type = "bezier";
+                    points = [
+                      [
+                        0.3
+                        0
+                      ]
+                      [
+                        0.8
+                        0.15
+                      ]
+                    ];
+                  }
+                ];
+              }
+              {
+                _args = [
+                  "emphasizedDecel"
+                  {
+                    type = "bezier";
+                    points = [
+                      [
+                        0.05
+                        0.7
+                      ]
+                      [
+                        0.1
+                        1
+                      ]
+                    ];
+                  }
+                ];
+              }
+              {
+                _args = [
+                  "standard"
+                  {
+                    type = "bezier";
+                    points = [
+                      [
+                        0.2
+                        0
+                      ]
+                      [
+                        0
+                        1
+                      ]
+                    ];
+                  }
+                ];
+              }
+            ];
+
+            animation = [
+              {
+                _args = [
+                  {
+                    leaf = "layersIn";
+                    enabled = true;
+                    speed = 5;
+                    bezier = "emphasizedDecel";
+                    style = "slide";
+                  }
+                ];
+              }
+              {
+                _args = [
+                  {
+                    leaf = "layersOut";
+                    enabled = true;
+                    speed = 4;
+                    bezier = "emphasizedAccel";
+                    style = "slide";
+                  }
+                ];
+              }
+              {
+                _args = [
+                  {
+                    leaf = "fadeLayers";
+                    enabled = true;
+                    speed = 5;
+                    bezier = "standard";
+                  }
+                ];
+              }
+
+              {
+                _args = [
+                  {
+                    leaf = "windowsIn";
+                    enabled = true;
+                    speed = 5;
+                    bezier = "emphasizedDecel";
+                  }
+                ];
+              }
+              {
+                _args = [
+                  {
+                    leaf = "windowsOut";
+                    enabled = true;
+                    speed = 3;
+                    bezier = "emphasizedAccel";
+                  }
+                ];
+              }
+              {
+                _args = [
+                  {
+                    leaf = "windowsMove";
+                    enabled = true;
+                    speed = 6;
+                    bezier = "standard";
+                  }
+                ];
+              }
+              {
+                _args = [
+                  {
+                    leaf = "workspaces";
+                    enabled = true;
+                    speed = 5;
+                    bezier = "standard";
+                  }
+                ];
+              }
+
+              {
+                _args = [
+                  {
+                    leaf = "specialWorkspace";
+                    enabled = true;
+                    speed = 4;
+                    bezier = "specialWorkSwitch";
+                    style = "slidefadevert 15%";
+                  }
+                ];
+              }
+              {
+                _args = [
+                  {
+                    leaf = "fade";
+                    enabled = true;
+                    speed = 6;
+                    bezier = "standard";
+                  }
+                ];
+              }
+              {
+                _args = [
+                  {
+                    leaf = "fadeDim";
+                    enabled = true;
+                    speed = 6;
+                    bezier = "standard";
+                  }
+                ];
+              }
+              {
+                _args = [
+                  {
+                    leaf = "border";
+                    enabled = true;
+                    speed = 6;
+                    bezier = "standard";
+                  }
+                ];
+              }
+            ];
           };
         };
 
