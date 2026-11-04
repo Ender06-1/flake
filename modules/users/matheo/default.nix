@@ -6,9 +6,8 @@
       den.batteries.define-user
       den.batteries.primary-user
 
-      shell
-      cli
       hyprland
+      cli
       desktop-apps
     ];
 
