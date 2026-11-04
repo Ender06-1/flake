@@ -29,6 +29,26 @@
           package = null;
           portalPackage = null;
           settings = {
+            env = [
+              {
+                _args = [
+                  "QT_QPA_PLATFORMTHEME"
+                  "qt6ct"
+                ];
+              }
+            ];
+
+            on = {
+              _args = [
+                "hyprland.start"
+                (lib.generators.mkLuaInline ''
+                  		function()
+                  		    hl.exec_cmd("hyprsunset")
+                  		end
+                  		'')
+              ];
+            };
+
             monitor = [
               {
                 output = "desc:AOC 24G2W1G3- 1J4QBHA003151";
@@ -669,9 +689,27 @@
           hyprcursor.enable = true;
         };
 
+        home.packages = with pkgs; [
+          hyprpicker
+          hyprsunset
+
+          wl-clipboard
+          cliphist
+
+          kdePackages.qt6ct
+          kdePackages.qt5compat
+
+          papirus-icon-theme
+        ];
+
         xdg = {
-          configFile."uwsm/env".source =
-            "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
+          configFile = {
+            "uwsm/env".source = "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
+            "qt6ct/qt6ct.conf".text = ''
+              [Appearance]
+              icon_theme=Papirus-Dark
+            '';
+          };
         };
       };
   };

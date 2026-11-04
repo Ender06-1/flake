@@ -15,6 +15,8 @@
       den.aspects.zoxide
       den.aspects.zellij
       den.aspects.neovim
+      den.aspects.firefox
+      den.aspects.yazi
     ];
 
     homeManager =
@@ -43,7 +45,12 @@
         };
 
         home.packages = with pkgs; [
-          firefox
+          nix-inspect
+          bat
+          fastfetch
+
+          prismlauncher
+          javaPackages.compiler.openjdk25
         ];
       };
 
