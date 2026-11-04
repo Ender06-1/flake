@@ -84,6 +84,10 @@
             };
           };
         };
+        services.displayManager.ly = {
+          enable = true;
+          x11Support = false;
+        };
 
         system.stateVersion = "26.05";
 

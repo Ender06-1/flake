@@ -3,7 +3,7 @@
 {
   flake-file.inputs.caelestia-shell.url = "github:caelestia-dots/shell?ref=v2.5.0";
 
-  den.aspects.hyprland-caelestia = {
+  den.aspects.matheo.hyprland = {
     nixos = {
       programs.hyprland = {
         enable = true;
