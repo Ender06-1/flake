@@ -42,6 +42,8 @@
           ];
           shellAliases = {
             nvimf = "nvim (fzf)";
+            llg = "ll --git-ignore";
+            ltg = "lt --git-ignore";
           };
           interactiveShellInit =
             let

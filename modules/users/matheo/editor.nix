@@ -113,10 +113,7 @@
           options.silent = true;
         }
         {
-          mode = [
-            "i"
-            "x"
-          ];
+          mode = [ "i" ];
           key = "jk";
           action = "<ESC>";
           options.silent = true;
@@ -228,6 +225,10 @@
             formatters_by_ft = {
               c = [ "clang-format" ];
               nix = [ "treefmt" ];
+              go = [
+                "goimports"
+                "gofumpt"
+              ];
             };
             format_on_save = {
               timeout_ms = 500;
@@ -255,8 +256,11 @@
         hlchunk = {
           enable = true;
           settings = {
-            chunk.enable = true;
-            indent.enable = true;
+            chunk = {
+              enable = true;
+              duration = 100;
+              delay = 100;
+            };
             line_num.enable = true;
             blank.enable = true;
           };
@@ -270,6 +274,7 @@
           servers = {
             clangd.enable = true;
             nil_ls.enable = true;
+            gopls.enable = true;
           };
         };
 
