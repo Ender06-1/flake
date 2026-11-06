@@ -1,9 +1,5 @@
 { inputs, ... }:
 
-# TODO
-# - change indent-blankline underline
-# - apply claude config
-
 {
   flake-file.inputs = {
     nixvim.url = "github:nix-community/nixvim";
@@ -26,6 +22,8 @@
       extraPackages = with pkgs; [
         nixfmt-tree
       ];
+
+      nixpkgs.config.allowUnfree = true;
 
       viAlias = true;
       vimAlias = true;
@@ -159,6 +157,26 @@
           key = "<leader>fg";
           action.__raw = ''require("telescope.builtin").live_grep'';
         }
+        {
+          mode = [ "n" ];
+          key = "<leader>fb";
+          action.__raw = ''require("telescope.builtin").buffers'';
+        }
+        {
+          mode = [ "n" ];
+          key = "<leader>fh";
+          action.__raw = ''require("telescope.builtin").help_tags'';
+        }
+        {
+          mode = [ "n" ];
+          key = "<leader>fr";
+          action.__raw = ''require("telescope.builtin").oldfiles'';
+        }
+        {
+          mode = [ "n" ];
+          key = "<leader>fd";
+          action.__raw = ''require("telescope.builtin").diagnostics'';
+        }
 
         #############
         ### Flash ###
@@ -185,6 +203,8 @@
       ];
 
       plugins = {
+        nvim-autopairs.enable = true;
+
         blink-cmp = {
           enable = true;
           settings = {
@@ -232,7 +252,17 @@
 
         guess-indent.enable = true;
 
-        indent-blankline.enable = true;
+        hlchunk = {
+          enable = true;
+          settings = {
+            chunk.enable = true;
+            indent.enable = true;
+            line_num.enable = true;
+            blank.enable = true;
+          };
+        };
+
+        nvim-surround.enable = true;
 
         lsp = {
           enable = true;
@@ -247,15 +277,56 @@
 
         telescope = {
           enable = true;
-          extensions.fzf-native.enable = true;
+          extensions = {
+            fzf-native.enable = true;
+            ui-select.enable = true;
+          };
         };
+
+        illuminate.enable = true;
+
+        yanky.enable = true;
+
+        grug-far.enable = true;
+
+        oil.enable = true;
+
+        undotree.enable = true;
 
         treesitter = {
           enable = true;
           highlight.enable = true;
         };
 
+        treesitter-textobjects.enable = true;
+
+        treesitter-context.enable = true;
+
         web-devicons.enable = true;
+
+        which-key.enable = true;
+
+        lualine.enable = true;
+
+        fidget.enable = true;
+
+        noice.enable = true;
+
+        todo-comments.enable = true;
+
+        trouble.enable = true;
+
+        gitsigns.enable = true;
+        lazygit.enable = true;
+        diffview.enable = true;
+        git-conflict.enable = true;
+
+        dap.enable = true;
+        dap-ui.enable = true;
+        dap-go.enable = true;
+        neotest.enable = true;
+
+        persistence.enable = true;
       };
     };
   };
