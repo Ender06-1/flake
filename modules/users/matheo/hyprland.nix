@@ -5,10 +5,7 @@
 
   den.aspects.matheo.hyprland = {
     nixos = {
-      programs.hyprland = {
-        enable = true;
-        withUWSM = true;
-      };
+      programs.hyprland.enable = true;
     };
 
     homeManager =
@@ -25,7 +22,6 @@
 
         wayland.windowManager.hyprland = {
           enable = true;
-          systemd.enable = false;
           package = null;
           portalPackage = null;
           settings = {
@@ -41,11 +37,7 @@
             on = {
               _args = [
                 "hyprland.start"
-                (lib.generators.mkLuaInline ''
-                  		function()
-                  		    hl.exec_cmd("hyprsunset")
-                  		end
-                  		'')
+                (lib.generators.mkLuaInline "function() hl.exec_cmd(\"hyprsunset\") end")
               ];
             };
 
@@ -159,7 +151,7 @@
                   {
                     _args = [
                       "${mod} + SHIFT + M"
-                      (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"uwsm stop\")")
+                      (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"hyprshutdown\")")
                     ];
                   }
 
@@ -173,14 +165,14 @@
                   {
                     _args = [
                       "${mod} + RETURN"
-                      (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"uwsm app -- kitty\")")
+                      (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"kitty\")")
                     ];
                   }
 
                   {
                     _args = [
                       "${mod} + I"
-                      (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"uwsm app -- firefox\")")
+                      (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"firefox\")")
                     ];
                   }
 
@@ -655,7 +647,6 @@
                   id = "vpn";
                 }
               ];
-              toasts.chargingChanged = false;
               vpn = {
                 enabled = true;
                 provider = [
@@ -692,6 +683,7 @@
         home.packages = with pkgs; [
           hyprpicker
           hyprsunset
+          hyprshutdown
 
           wl-clipboard
           cliphist
@@ -704,7 +696,6 @@
 
         xdg = {
           configFile = {
-            "uwsm/env".source = "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
             "qt6ct/qt6ct.conf".text = ''
               [Appearance]
               icon_theme=Papirus-Dark

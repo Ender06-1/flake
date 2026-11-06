@@ -1,8 +1,11 @@
 {
   den.aspects.matheo.desktop-apps = {
     nixos = {
+      programs.steam.enable = true;
+
       services.flatpak.enable = true;
     };
+
     homeManager = { pkgs, ... }: {
       home.packages = with pkgs; [
         prismlauncher

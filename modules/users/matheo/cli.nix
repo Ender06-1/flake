@@ -1,4 +1,4 @@
-{ inputs, den, ... }:
+{ den, ... }:
 
 {
   den.aspects.matheo.cli = {
@@ -12,10 +12,6 @@
 
     homeManager =
       { pkgs, ... }:
-      let
-        system = pkgs.stdenv.system;
-        pkgs-unstable = import inputs.nixpkgs-unstable { inherit system; };
-      in
       {
         home.packages = with pkgs; [
           nix-inspect
@@ -89,7 +85,7 @@
             '';
         };
 
-	programs.fzf.enable = true;
+        programs.fzf.enable = true;
 
         programs.git = {
           enable = true;
@@ -103,19 +99,6 @@
         };
 
         programs.nh.enable = true;
-
-        programs.neovim = {
-          enable = true;
-          package = pkgs-unstable.neovim-unwrapped;
-
-          defaultEditor = true;
-
-          waylandSupport = true;
-
-          viAlias = true;
-          vimAlias = true;
-          vimdiffAlias = true;
-        };
 
         programs.starship = {
           enable = true;
@@ -131,10 +114,16 @@
             theme = "onedark";
             show_startup_tips = false;
             pane_frame_style = "full";
+            default_mode = "locked";
           };
         };
 
         programs.zoxide.enable = true;
+
+        programs.direnv = {
+          enable = true;
+          nix-direnv.enable = true;
+        };
       };
   };
 }

@@ -9,9 +9,12 @@
       hyprland
       cli
       desktop-apps
+      editor
     ];
 
     nixos = {
+      nixpkgs.config.allowUnfree = true;
+
       users.users.matheo.initialPassword = "matheo";
     };
 
