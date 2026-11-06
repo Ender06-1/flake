@@ -262,6 +262,17 @@
 
                   {
                     _args = [
+                      "Print"
+                      (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("${pkgs.writeShellScript "screenshot.sh" ''
+                        set -eu
+                        MONITOR=''$(hyprctl activeworkspace | head -1 | awk '{ print $7 }' | sed 's/://')
+                        grim -o ''${MONITOR} - | satty -f - --copy-command wl-copy -o "~/Pictures/Screenshots/%Y%m%d_%H%M%S.png"
+                      ''}")'')
+                    ];
+                  }
+
+                  {
+                    _args = [
                       "${mod} + mouse:272"
                       (lib.generators.mkLuaInline "hl.dsp.window.drag()")
                       { mouse = true; }
@@ -671,6 +682,8 @@
           };
         };
 
+        programs.satty.enable = true;
+
         home.pointerCursor = {
           enable = true;
           package = pkgs.bibata-cursors;
@@ -692,6 +705,8 @@
           kdePackages.qt5compat
 
           papirus-icon-theme
+
+          grim
         ];
 
         xdg = {

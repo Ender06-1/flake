@@ -1,5 +1,9 @@
 { inputs, ... }:
 
+# TODO
+# - change indent-blankline underline
+# - apply claude config
+
 {
   flake-file.inputs = {
     nixvim.url = "github:nix-community/nixvim";
@@ -60,6 +64,23 @@
 
         ignorecase = true;
         smartcase = true;
+
+        scrolloff = 10;
+
+        undofile = true;
+        swapfile = false;
+
+        splitright = true;
+        splitbelow = true;
+
+        updatetime = 250;
+        timeoutlen = 300;
+
+        termguicolors = true;
+
+        expandtab = true;
+
+        inccommand = "split";
       };
 
       colorschemes.onedark = {
@@ -91,6 +112,15 @@
           ];
           key = "k";
           action = "gk";
+          options.silent = true;
+        }
+        {
+          mode = [
+            "i"
+            "x"
+          ];
+          key = "jk";
+          action = "<ESC>";
           options.silent = true;
         }
 
@@ -188,7 +218,10 @@
 
         cursorline = {
           enable = true;
-          settings.cursorline.number = true;
+          settings = {
+            cursorline.number = true;
+            cursorword.enable = false;
+          };
         };
 
         flash = {
