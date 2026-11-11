@@ -17,7 +17,25 @@
           nix-inspect
           bat
           fastfetch
+
+          # yazi deps
+          p7zip
+          ffmpeg
+          jq
+          fd
+          ripgrep
+          fzf
+          resvg
+          wl-clipboard
+          imagemagick
         ];
+
+        programs.lazygit.enable = true;
+
+        programs.btop = {
+          enable = true;
+          settings.update_ms = 1000;
+        };
 
         programs.eza = {
           enable = true;
@@ -43,7 +61,7 @@
           shellAliases = {
             nvimf = "nvim (fzf)";
             llg = "ll --git-ignore";
-            ltg = "lt --git-ignore";
+            ltg = "lt -a --git-ignore";
           };
           interactiveShellInit =
             let
@@ -66,7 +84,7 @@
               set -g fish_color_normal ${white}
               set -g fish_color_command ${green} --bold
               set -g fish_color_builtin ${lightYellow} --bold
-              set -g fish_color_quote ${white}
+              set -g fish_color_quote ${darkYellow}
               set -g fish_color_redirection ${cyan}
               set -g fish_color_end ${gutterGrey}
               set -g fish_color_error ${lightRed}
@@ -125,6 +143,11 @@
         programs.direnv = {
           enable = true;
           nix-direnv.enable = true;
+        };
+
+        services.podman = {
+          enable = true;
+          enableTypeChecks = true;
         };
       };
   };

@@ -256,7 +256,14 @@
                   {
                     _args = [
                       "${mod} + SHIFT + P"
-                      (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"systemctl suspend-then-hibernate\")")
+                      (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("systemctl suspend-then-hibernate")'')
+                    ];
+                  }
+
+                  {
+                    _args = [
+                      "${mod} + CTRL + SHIFT + P"
+                      (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("systemctl hibernate")'')
                     ];
                   }
 

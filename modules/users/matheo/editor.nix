@@ -5,7 +5,7 @@
     nixvim.url = "github:nix-community/nixvim";
   };
 
-  den.aspects.matheo.editor.homeManager = { pkgs, ... }: {
+  den.aspects.matheo.editor.homeManager = { config, pkgs, ... }: {
     imports = [
       inputs.nixvim.homeModules.nixvim
     ];
@@ -199,7 +199,76 @@
 
       ];
 
+      lsp = {
+        inlayHints.enable = true;
+        inlineCompletion.enable = true;
+        documentColor.enable = true;
+        servers = {
+          clangd.enable = true;
+          nil_ls.enable = true;
+          gopls.enable = true;
+          tsc.enable = true;
+          html.enable = true;
+          css.enable = true;
+          docker_language_server.enable = true;
+        };
+        keymaps = [
+          {
+            key = "gd";
+            mode = "n";
+            lspBufAction = "definition";
+          }
+          {
+            key = "gD";
+            mode = "n";
+            lspBufAction = "declaration";
+          }
+          {
+            key = "gr";
+            mode = "n";
+            lspBufAction = "references";
+          }
+          {
+            key = "gy";
+            mode = "n";
+            lspBufAction = "type_definition";
+          }
+          {
+            key = "<leader>ca";
+            mode = "n";
+            lspBufAction = "code_action";
+          }
+          {
+            key = "<leader>rn";
+            mode = "n";
+            lspBufAction = "rename";
+          }
+          {
+            key = "<leader>e";
+            mode = "n";
+            action = config.lib.nixvim.mkRaw "function() vim.diagnostic.open_float() end";
+          }
+          {
+            key = "<leader>ih";
+            mode = "n";
+            action = config.lib.nixvim.mkRaw "function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end";
+          }
+        ];
+      };
+
       plugins = {
+        nvim-lightbulb = {
+          enable = true;
+          settings = {
+            autocmd = {
+              enabled = true;
+              updatetime = 200;
+            };
+            virtual_text.enabled = true;
+            sign.enabled = false;
+          };
+        };
+
         nvim-autopairs.enable = true;
 
         blink-cmp = {
@@ -229,6 +298,11 @@
                 "goimports"
                 "gofumpt"
               ];
+              html = [ "oxfmt" ];
+              javascript = [ "oxfmt" ];
+              typescript = [ "oxfmt" ];
+              javascriptreact = [ "oxfmt" ];
+              typescriptreact = [ "oxfmt" ];
             };
             format_on_save = {
               timeout_ms = 500;
@@ -268,15 +342,7 @@
 
         nvim-surround.enable = true;
 
-        lsp = {
-          enable = true;
-          inlayHints = true;
-          servers = {
-            clangd.enable = true;
-            nil_ls.enable = true;
-            gopls.enable = true;
-          };
-        };
+        lspconfig.enable = true;
 
         rainbow-delimiters.enable = true;
 
