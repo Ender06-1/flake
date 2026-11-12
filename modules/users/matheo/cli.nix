@@ -6,10 +6,6 @@
       (den.batteries.user-shell "fish")
     ];
 
-    nixos = {
-      services.tailscale.enable = true;
-    };
-
     homeManager =
       { pkgs, ... }:
       {
@@ -144,6 +140,14 @@
           enable = true;
           nix-direnv.enable = true;
         };
+
+        programs.ssh = {
+          enable = true;
+          enableDefaultConfig = false;
+          settings."*".AddKeysToAgent = "yes";
+        };
+
+        services.ssh-agent.enable = true;
 
         services.podman = {
           enable = true;

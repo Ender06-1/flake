@@ -5,7 +5,7 @@
     nixvim.url = "github:nix-community/nixvim";
   };
 
-  den.aspects.matheo.editor.homeManager = { config, pkgs, ... }: {
+  den.aspects.nixvim.homeManager = { config, pkgs, ... }: {
     imports = [
       inputs.nixvim.homeModules.nixvim
     ];

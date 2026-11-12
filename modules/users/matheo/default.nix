@@ -2,32 +2,25 @@
 
 {
   den.aspects.matheo = {
-    includes = with den.aspects.matheo; [
+    includes = with den.aspects; [
       den.batteries.define-user
       den.batteries.primary-user
 
-      hyprland
-      cli
-      desktop-apps
-      editor
+      nixvim
+
+      matheo.hyprland
+      matheo.cli
+      matheo.desktop-apps
     ];
 
-    nixos = {
-      nixpkgs.config.allowUnfree = true;
+    nixos.users.users.matheo.initialPassword = "matheo";
 
-      users.users.matheo.initialPassword = "matheo";
-    };
-
-    homeManager =
-      { pkgs, ... }:
-      {
-        xdg = {
-          enable = true;
-          userDirs = {
-            enable = true;
-            createDirectories = true;
-          };
-        };
+    homeManager.xdg = {
+      enable = true;
+      userDirs = {
+        enable = true;
+        createDirectories = true;
       };
+    };
   };
 }
