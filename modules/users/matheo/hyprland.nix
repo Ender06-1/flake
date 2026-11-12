@@ -4,9 +4,8 @@
   flake-file.inputs.caelestia-shell.url = "github:caelestia-dots/shell?ref=v2.5.0";
 
   den.aspects.matheo.hyprland = {
-    nixos = {
-      programs.hyprland.enable = true;
-    };
+
+    nixos.programs.hyprland.enable = true;
 
     homeManager =
       {
@@ -37,7 +36,7 @@
             on = {
               _args = [
                 "hyprland.start"
-                (lib.generators.mkLuaInline "function() hl.exec_cmd(\"hyprsunset\") end")
+                (lib.generators.mkLuaInline ''function() hl.exec_cmd("hyprsunset") end'')
               ];
             };
 

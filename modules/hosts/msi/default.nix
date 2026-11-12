@@ -1,5 +1,12 @@
+{ den, ... }:
+
 {
   den.aspects.msi = {
+    includes = with den.aspects; [
+      matheo.hyprland
+      matheo.desktop-apps
+    ];
+
     nixos =
       {
         config,

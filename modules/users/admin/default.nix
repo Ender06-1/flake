@@ -8,7 +8,5 @@
 
       nixvim
     ];
-
-    nixos.users.users.admin.initialPassword = "admin";
   };
 }

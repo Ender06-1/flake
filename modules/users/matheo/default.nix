@@ -13,8 +13,6 @@
       matheo.desktop-apps
     ];
 
-    nixos.users.users.matheo.initialPassword = "matheo";
-
     homeManager.xdg = {
       enable = true;
       userDirs = {
