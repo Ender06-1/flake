@@ -4,7 +4,7 @@
   den.aspects.msi = {
     includes = with den.aspects; [
       matheo.hyprland
-      matheo.desktop-apps
+      matheo.games
     ];
 
     nixos =

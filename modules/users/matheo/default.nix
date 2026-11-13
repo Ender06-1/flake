@@ -8,9 +8,28 @@
 
       nixvim
 
+      matheo.bat
+      matheo.btop
+      matheo.direnv
+      matheo.eza
+      matheo.fastfetch
+      matheo.fish
+      matheo.fzf
+      matheo.git
+      matheo.lazygit
+      matheo.nh
+      matheo.podman
+      matheo.ssh
+      matheo.starship
+      matheo.yazi
+      matheo.zellij
+      matheo.zoxide
+
+      matheo.games
+      matheo.kitty
+      matheo.firefox
+
       matheo.hyprland
-      matheo.cli
-      matheo.desktop-apps
     ];
 
     homeManager.xdg = {
