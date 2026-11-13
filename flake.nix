@@ -4,6 +4,7 @@
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   inputs = {
+    agenix.url = "github:ryantm/agenix";
     caelestia-shell.url = "github:caelestia-dots/shell?ref=v2.5.0";
     den.url = "github:denful/den";
     flake-file.url = "github:denful/flake-file";

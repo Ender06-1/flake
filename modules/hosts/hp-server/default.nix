@@ -1,5 +1,13 @@
+{ den, ... }:
+
 {
   den.aspects.hp-server = {
+    includes = with den.aspects; [
+      agenix
+
+      hp-server.caddy
+    ];
+
     nixos =
       {
         config,
