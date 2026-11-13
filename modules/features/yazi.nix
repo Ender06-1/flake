@@ -1,5 +1,5 @@
 {
-  den.aspects.matheo.yazi.homeManager = { pkgs, ... }: {
+  den.aspects.yazi.homeManager = { pkgs, ... }: {
     programs.yazi.enable = true;
 
     home.packages = with pkgs; [

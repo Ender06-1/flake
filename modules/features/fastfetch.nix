@@ -1,5 +1,5 @@
 {
-  den.aspects.matheo.fastfetch.homeManager = {
+  den.aspects.fastfetch.homeManager = {
     programs.fastfetch.enable = true;
   };
 }

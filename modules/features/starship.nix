@@ -1,5 +1,5 @@
 {
-  den.aspects.matheo.starship.homeManager = {
+  den.aspects.starship.homeManager = {
     programs.starship = {
       enable = true;
       enableTransience = true;

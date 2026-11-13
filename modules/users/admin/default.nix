@@ -7,6 +7,20 @@
       den.batteries.primary-user
 
       nixvim
+      fish
+      starship
+      bat
+      btop
+      eza
+      fastfetch
+      fzf
+      lazygit
+      ssh
+      yazi
+      zellij
+      zoxide
+
+      admin.git
     ];
 
     user.openssh.authorizedKeys.keys = [

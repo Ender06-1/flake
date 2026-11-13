@@ -1,5 +1,5 @@
 {
-  den.aspects.matheo.zellij.homeManager = {
+  den.aspects.zellij.homeManager = {
     programs.zellij = {
       enable = true;
       settings = {

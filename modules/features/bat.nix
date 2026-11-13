@@ -1,5 +1,5 @@
 {
-  den.aspects.matheo.bat.homeManager = {
+  den.aspects.bat.homeManager = {
     programs.bat.enable = true;
   };
 }

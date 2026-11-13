@@ -1,5 +1,5 @@
 {
-  den.aspects.matheo.fzf.homeManager = {
+  den.aspects.fzf.homeManager = {
     programs.fzf.enable = true;
   };
 }

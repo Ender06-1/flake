@@ -1,5 +1,5 @@
 {
-  den.aspects.matheo.ssh.homeManager = {
+  den.aspects.ssh.homeManager = {
     programs.ssh = {
       enable = true;
       enableDefaultConfig = false;

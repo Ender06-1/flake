@@ -1,13 +1,12 @@
 { den, ... }:
 
 {
-  den.aspects.matheo.fish = {
+  den.aspects.fish = {
     includes = [
       (den.batteries.user-shell "fish")
     ];
 
     homeManager = { pkgs, ... }: {
-
       programs.fish = {
         enable = true;
         plugins = with pkgs.fishPlugins; [

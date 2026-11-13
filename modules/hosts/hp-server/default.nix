@@ -120,6 +120,7 @@
         i18n.extraLocales = [ "fr_FR.UTF-8/UTF-8" ];
 
         networking.hostId = "4ae6ae4e";
+        networking.hostName = "hp-server";
         networking.networkmanager.enable = true;
 
         console.keyMap = "us";

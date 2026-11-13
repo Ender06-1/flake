@@ -1,5 +1,5 @@
 {
-  den.aspects.matheo.lazygit.homeManager = {
+  den.aspects.lazygit.homeManager = {
     programs.lazygit.enable = true;
   };
 }

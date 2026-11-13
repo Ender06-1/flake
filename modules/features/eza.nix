@@ -1,5 +1,5 @@
 {
-  den.aspects.matheo.eza.homeManager = {
+  den.aspects.eza.homeManager = {
     programs.eza = {
       enable = true;
       colors = "always";
