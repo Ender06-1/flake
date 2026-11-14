@@ -1,6 +1,8 @@
 { den, ... }:
 
 {
+  den.homes.x86_64-linux.matheo = { };
+
   den.aspects.matheo = {
     includes = with den.aspects; [
       den.batteries.define-user

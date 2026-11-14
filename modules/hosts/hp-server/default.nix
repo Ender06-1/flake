@@ -1,11 +1,14 @@
 { den, ... }:
 
 {
+  den.hosts.x86_64-linux.hp-server.users.admin = { };
+
   den.aspects.hp-server = {
     includes = with den.aspects; [
       agenix
 
       hp-server.caddy
+      hp-server.filebrowserQuantum
     ];
 
     nixos =
@@ -99,6 +102,7 @@
             ''}";
           };
           datasets = {
+            "tank/filebrowser".use_template = [ "production" ];
             "tank/firefly-iii".use_template = [ "production" ];
             "tank/immich".use_template = [ "production" ];
             "tank/nextcloud".use_template = [ "production" ];
@@ -143,6 +147,8 @@
         };
 
         services.tailscale.enable = true;
+
+        virtualisation.podman.enable = true;
       };
   };
 }

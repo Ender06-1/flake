@@ -1,6 +1,8 @@
 { den, ... }:
 
 {
+  den.hosts.x86_64-linux.msi.users.matheo = { };
+
   den.aspects.msi = {
     includes = with den.aspects; [
       matheo.hyprland
