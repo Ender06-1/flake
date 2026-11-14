@@ -8,7 +8,9 @@
       agenix
 
       hp-server.caddy
-      hp-server.filebrowserQuantum
+
+      hp-server.services.filebrowser
+      hp-server.services.vaultwarden
     ];
 
     nixos =

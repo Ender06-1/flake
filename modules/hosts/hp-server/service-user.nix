@@ -1,7 +1,7 @@
 { den, ... }:
 
 {
-  den.aspects.service-user = {
+  den.aspects.hp-server.service-user = { user, ... }: {
     includes = with den.aspects; [
       nixvim
       fish
@@ -10,6 +10,5 @@
       bat
     ];
 
-    user.extraGroups = [ "systemd-journal" ];
   };
 }
