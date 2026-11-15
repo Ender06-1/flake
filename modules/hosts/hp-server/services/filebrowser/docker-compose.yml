@@ -1,0 +1,10 @@
+name: filebrowser
+services:
+  filebrowser:
+    image: ghcr.io/gtsteffaniak/filebrowser:stable
+    volumes:
+      - /srv/tank/filebrowser:/mnt/storage
+      - /var/stacks/filebrowser:/home/filebrowser/data
+    ports:
+      - "127.0.0.1:8000:80"
+    restart: unless-stopped

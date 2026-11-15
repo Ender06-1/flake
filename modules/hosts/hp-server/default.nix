@@ -11,6 +11,8 @@
 
       hp-server.services.filebrowser
       hp-server.services.vaultwarden
+      hp-server.services.ntfy
+      hp-server.services.immich
     ];
 
     nixos =
@@ -82,7 +84,7 @@
             autoprune = true;
 
             pre_snapshot_script = "${pkgs.writeShellScript "sanoid-pre-snapshot-ntfy.sh" ''
-              ${pkgs.curl} \
+              ${pkgs.curl}/bin/curl \
                 -H "Title: ZFS snapshot starting for ''${SANOID_TARGETS}" \
                 -H "Priority: default" \
                 -H "Tags: hourglass,floppy_disk" \
@@ -92,7 +94,7 @@
                 https://ntfy.tailb1bb3f.ts.net/hdd-pool
             ''}";
             post_snapshot_script = "${pkgs.writeShellScript "sanoid-post-snapshot-ntfy.sh" ''
-              ${pkgs.curl} \
+              ${pkgs.curl}/bin/curl \
                 -H "Title: ZFS snapshot completed for ''${SANOID_TARGETS}" \
                 -H "Priority: default" \
                 -H "Tags: white_check_mark,floppy_disk" \
@@ -147,7 +149,7 @@
 
         services.tailscale.enable = true;
 
-        virtualisation.podman.enable = true;
+        virtualisation.docker.enable = true;
       };
   };
 }
