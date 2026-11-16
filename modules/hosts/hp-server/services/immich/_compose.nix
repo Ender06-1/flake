@@ -12,7 +12,7 @@
 
   # Containers
   virtualisation.oci-containers.containers."immich_machine_learning" = {
-    image = "ghcr.io/immich-app/immich-machine-learning:v3.3.3";
+    image = "ghcr.io/immich-app/immich-machine-learning:v3.4.1";
     environmentFiles = [
       "/run/agenix/immich"
     ];
@@ -115,7 +115,7 @@
     ];
   };
   virtualisation.oci-containers.containers."immich_server" = {
-    image = "ghcr.io/immich-app/immich-server:v3.3.3";
+    image = "ghcr.io/immich-app/immich-server:v3.4.1";
     environmentFiles = [
       "/run/agenix/immich"
     ];
