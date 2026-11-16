@@ -291,19 +291,28 @@
         conform-nvim = {
           enable = true;
           settings = {
-            formatters_by_ft = {
-              c = [ "clang-format" ];
-              nix = [ "treefmt" ];
-              go = [
-                "goimports"
-                "gofumpt"
-              ];
-              html = [ "oxfmt" ];
-              javascript = [ "oxfmt" ];
-              typescript = [ "oxfmt" ];
-              javascriptreact = [ "oxfmt" ];
-              typescriptreact = [ "oxfmt" ];
-            };
+            formatters_by_ft =
+              let
+                web = {
+                  __unkeyed-1 = "oxfmt";
+                  __unkeyed-2 = "prettierd";
+                  __unkeyed-3 = "prettier";
+                  stop_after_first = true;
+                };
+              in
+              {
+                c = [ "clang-format" ];
+                nix = [ "treefmt" ];
+                go = [
+                  "goimports"
+                  "gofumpt"
+                ];
+                html = web;
+                javascript = web;
+                typescript = web;
+                javascriptreact = web;
+                typescriptreact = web;
+              };
             format_on_save = {
               timeout_ms = 500;
               lsp_format = "fallback";
