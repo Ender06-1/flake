@@ -58,6 +58,13 @@
               }
 
               {
+                output = "eDP-1";
+                mode = "2256x1504@60";
+                position = "auto";
+                scale = 1.333333;
+              }
+
+              {
                 output = "";
                 mode = "preferred";
                 position = "auto";
@@ -107,6 +114,12 @@
                   repeat_delay = 200;
                   repeat_rate = 40;
                   kb_options = "compose:ralt";
+
+                  touchpad = {
+                    natural_scroll = true;
+                    disable_while_typing = true;
+                    scroll_factor = 0.3;
+                  };
                 };
 
               }
@@ -568,6 +581,29 @@
                     enabled = true;
                     speed = 6;
                     bezier = "standard";
+                  }
+                ];
+              }
+            ];
+
+            gesture = [
+              {
+                _args = [
+                  {
+                    fingers = 4;
+                    direction = "horizontal";
+                    action = "workspace";
+                  }
+                ];
+              }
+
+              {
+                _args = [
+                  {
+                    fingers = 3;
+                    direction = "up";
+                    action = "special";
+                    workspace_name = "special";
                   }
                 ];
               }

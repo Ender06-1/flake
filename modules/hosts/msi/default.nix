@@ -10,13 +10,7 @@
     ];
 
     nixos =
-      {
-        config,
-        lib,
-        pkgs,
-        modulesPath,
-        ...
-      }:
+      { pkgs, ... }:
       {
         imports = [
           ./_hardware-configuration.nix
